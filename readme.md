@@ -1,3 +1,5 @@
+[TOC]
+
 ## SpringSecurity权限控制
 
 ### 1.1 Security配置
