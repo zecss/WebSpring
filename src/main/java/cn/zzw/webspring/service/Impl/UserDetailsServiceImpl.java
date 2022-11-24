@@ -2,14 +2,18 @@ package cn.zzw.webspring.service.Impl;
 
 import cn.zzw.webspring.domain.LoginUser;
 import cn.zzw.webspring.domain.entity.User;
+import cn.zzw.webspring.mapper.RolesMapper;
 import cn.zzw.webspring.mapper.UserMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @BelongsProject: WebSpring
@@ -24,6 +28,10 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private RolesMapper rolesMapper;
+
+
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -33,6 +41,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user==null){
             throw new RuntimeException("用户不存在");
         }
-        return new LoginUser(user);
+        List<String> auth= rolesMapper.selectRoleByUserId(user.getId());
+
+        return new LoginUser(user,auth);
     }
 }

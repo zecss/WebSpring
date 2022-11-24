@@ -1,13 +1,18 @@
 package cn.zzw.webspring.domain;
 
+import cn.zzw.webspring.domain.entity.Roles;
 import cn.zzw.webspring.domain.entity.User;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @BelongsProject: WebSpring
@@ -23,9 +28,24 @@ import java.util.Collection;
 public class LoginUser implements UserDetails {
     private User user;
 
+    private List<String> perms;
+
+    public LoginUser(User user,List<String> perms) {
+        this.user = user;
+        this.perms = perms;
+    }
+
+
+    List<SimpleGrantedAuthority> newList = new ArrayList<SimpleGrantedAuthority>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        for (String perm : perms) {
+            SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(perm);
+            newList.add(simpleGrantedAuthority);
+        }
+
+        return newList;
     }
 
     @Override

@@ -6,6 +6,7 @@ import cn.zzw.webspring.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -44,6 +45,7 @@ public class UserController {
     }
 
     @ApiOperation("测试")
+    @PreAuthorize("hasAuthority('test')")
     @GetMapping("test")
     public ResponseResult test(){
         return ResponseResult.okResult("测试");
