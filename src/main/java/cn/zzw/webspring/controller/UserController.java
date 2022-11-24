@@ -31,23 +31,23 @@ public class UserController {
     public ResponseResult login(@RequestBody User user){
         return userService.login(user);
     }
+    @ApiOperation("用户注册")
+    @PostMapping("register")
+    public ResponseResult register(@RequestBody User user){
+        userService.save(user);
+        return ResponseResult.okResult();
+    }
+    @ApiOperation("用户信息")
+    @PostMapping("info")
+    public ResponseResult getInfo(){
+        return ResponseResult.okResult();
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @ApiOperation("测试")
+    @GetMapping("test")
+    public ResponseResult test(){
+        return ResponseResult.okResult("测试");
+    }
 
 
 
