@@ -1,5 +1,6 @@
 package cn.zzw.webspring.config;
 
+import cn.zzw.webspring.utils.FastJsonRedisSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
